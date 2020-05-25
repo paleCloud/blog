@@ -1,0 +1,158 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="admin/_fragments :: header(~{:: title})">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+    <link rel="stylesheet" href="../../static/css/my.css">
+    <link rel="stylesheet" href="../../static/lib/editormd/css/editormd.min.css">
+    <title>新增标签</title>
+</head>
+<body>
+<!--导航-->
+<nav th:replace="admin/_fragments :: menu(3)" class="ui inverted attached segment m-padding-tb-min m-shadow-small">
+    <div class="ui container">
+        <div class="ui inverted stackable secondary menu">
+            <h2 class="ui teal header item">后台管理</h2>
+            <a href="index.html" class="active m-item item m-mobile-hide"><i class="mini home icon"></i>&ensp;博客</a>
+            <a href="types.html" class="m-item item m-mobile-hide"><i class="mini idea icon"></i>&ensp;分类</a>
+            <a href="./tags.html" class="m-item item m-mobile-hide"><i class="mini tags icon"></i>&ensp;标签</a>
+            <div class="right m-item m-mobile-hide menu">
+                <div class="ui dropdown item">
+                    <div class="text">
+                        <img class="ui avatar image" src="https://picsum.photos/seed/picsum/100/100">
+                        王国祥
+                    </div>
+                    <i class="dropdown icon"></i>
+                    <div class="menu">
+                        <a href="#" class="item">注&emsp;&emsp;销</a>
+                        <a href="#" class="item">修改密码</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a href="#" class="ui menu toggle black icon button m-right-top m-mobile-show">
+        <i class="sidebar icon"></i>
+    </a>
+</nav>
+
+<!--二级导航-->
+<div class="ui attached pointing menu ">
+    <div class="ui container">
+        <div class="right menu">
+            <a href="blog-input.html" th:href="@{/admin/tags/add}" class="active item">新增</a>
+            <a href="blogs.html" th:href="@{/admin/tags}" class=" teal item">列表</a>
+        </div>
+    </div>
+</div>
+<!--主体内容-->
+<div class="m-container-small m-padding-tb-big">
+    <div class="ui container">
+        <form th:object="${tag}" th:action=" *{id} == null ? @{/admin/tags} : @{/admin/tags/{id(id=*{id})}}"
+              action="#" class="ui form" method="post">
+            <input type="hidden" name="id" th:value="*{id}">
+            <div class="required field">
+                <div class="ui left labeled input">
+                    <label class="ui teal basic label">名称</label>
+                    <input type="text" name="name" placeholder="标签名称" th:value="*{name}">
+                </div>
+            </div>
+            <div class="ui error message"></div>
+            <!--/*/   <div class="ui negative message" th:if="${#fields.hasErrors('name')}">
+                   <i class="close icon"></i>
+                   <div class="header">验证失败</div>
+                   <p th:errors="*{name}">提交消息不符合规则</p>
+               </div>
+                /*/-->
+            <div class="ui right aligned container">
+                <button type="button" class="ui button" onclick="window.history.go(-1)">返回</button>
+                <button class="ui teal submit button">提交</button>
+            </div>
+
+        </form>
+    </div>
+</div>
+<br>
+<br>
+<!--底部-->
+<footer th:replace="admin/_fragments :: footer" class="ui inverted vertical segment m-padding-tb-massive">
+    <div class="ui center aligned container">
+        <div class="ui inverted divided stackable grid">
+            <div class="three wide column">
+                <div class="ui inverted link list">
+                    <div class="item">
+                        <img src="../../static/images/my_wechat.png" class="ui rounded image"
+                             style="width: 120px; height: 120px" alt="微信二维码">
+                    </div>
+                </div>
+            </div>
+            <div class="three wide column">
+                <h4 class="ui inverted header  m-opacity-min">最新博客</h4>
+                <div class="ui inverted link list">
+                    <a href="#" class="item">用户故事</a>
+                    <a href="#" class="item">用户故事</a>
+                    <a href="#" class="item">用户故事</a>
+                </div>
+            </div>
+            <div class="three wide column">
+                <h4 class="ui inverted header  m-opacity-min">联系我</h4>
+                <div class="ui inverted link list">
+                    <a class="item">Email:819582584@qq.com</a>
+                    <a class="item">QQ:819582584</a>
+                </div>
+            </div>
+            <div class="seven wide column">
+                <h4 class="ui inverted header  m-opacity-min">关于我</h4>
+                <p class="m-text-lined m-text-spaced m-text-thin m-opacity-min">这是我的个人博客，一个热爱编程的少年，喜欢编程，热爱自然</p>
+            </div>
+        </div>
+        <div class="ui inverted section divider"></div>
+        <p class="m-text-lined m-text-spaced m-text-thin m-opacity-min"> ©2012-2020 这是我的个人博客</p>
+    </div>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+<script src="../../static/lib/editormd/editormd.min.js"></script>
+<script>
+    //初始化markDown编辑器
+    var contentEditor;
+
+    $(function() {
+        contentEditor = editormd("md-content", {
+            width   : "100%",
+            height  : 640,
+            syncScrolling : "single",
+            path    : "../static/lib/editormd/lib/"
+        });
+        /*
+        // or
+        testEditor = editormd({
+            id      : "test-editormd",
+            width   : "90%",
+            height  : 640,
+            path    : "../lib/"
+        });
+        */
+    });
+
+    $('.menu.toggle').click(function () {
+        $('.m-item').toggleClass('m-mobile-hide');
+    });
+    $('.ui.dropdown').dropdown({
+        on: 'hover'
+    });
+    $('.ui.form').form({
+        fields : {
+         title : {
+             identifier: 'name',
+             rules:[{
+                 type:'empty',
+                 prompt:'请输入标签名称'
+             }]
+         }
+        }
+    });
+</script>
+</body>
+</html>

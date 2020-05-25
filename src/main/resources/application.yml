@@ -1,0 +1,50 @@
+spring:
+  profiles:
+    active: dev
+  messages:
+    basename: i18n/messages #配置国际化
+comment.avatar: /images/guest.jpg
+---
+#开发环境
+spring:
+  profiles: dev
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/blog?useUnicode=true&characterEncoding=utf-8&serverTimezone=UTC&useSSL=false
+    username: root
+    password: root
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+# 日志配置
+logging:
+  level:
+    root: info
+    com.wgx.blog: debug
+  file:
+    name: log/blog-dev.log  #在根路径生成日志，  默认大小是10m
+server:
+  port: 8080
+---
+#生成环境
+spring:
+  profiles: pro
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/blog?useUnicode=true&characterEncoding=utf-8&serverTimezone=UTC
+    username: root
+    password: root
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+logging:
+  level:
+    root: warn
+    com.wgx.blog: info
+  file:
+    name: log/blog-pro.log
+server:
+  port: 8081
